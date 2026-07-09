@@ -1,0 +1,359 @@
+/* BlackDesck email theme — warm ivory paper · near-black ink · logo gold (#F5A623).
+   Mirrors the app's "warm paper + gold + serif" identity. Inlined by Laravel's
+   markdown mailer, so keep to email-safe CSS (degrades cleanly in Outlook). */
+
+/* Base */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family:
+        'Inter',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif,
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol';
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #f4efe6;
+    color: #57534c;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.6;
+    text-align: start;
+}
+
+a {
+    color: #b57e12;
+}
+
+a img {
+    border: none;
+}
+
+/* Typography */
+
+h1 {
+    font-family: 'Fraunces', Georgia, Cambria, 'Times New Roman', serif;
+    color: #26231e;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: 0;
+    text-align: start;
+}
+
+h2 {
+    font-family: 'Fraunces', Georgia, Cambria, 'Times New Roman', serif;
+    color: #26231e;
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 0;
+    text-align: start;
+}
+
+h3 {
+    font-family: 'Fraunces', Georgia, Cambria, 'Times New Roman', serif;
+    color: #26231e;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 0;
+    text-align: left;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6em;
+    margin-top: 0;
+    text-align: left;
+}
+
+p.sub {
+    font-size: 12px;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Layout */
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4efe6;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Header — dark ink banner carrying the white BlackDesck wordmark, gold underline. */
+
+.header {
+    padding: 28px 0 14px;
+    text-align: center;
+}
+
+.header-band {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #26231e;
+    border-radius: 16px;
+    border-bottom: 3px solid #f5a623;
+    margin: 0 auto;
+    width: 570px;
+}
+
+.header-band-cell {
+    padding: 26px 24px;
+    text-align: center;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+/* Logo — wide wordmark (not a square icon). */
+
+.logo {
+    display: block;
+    border: 0;
+    height: auto;
+    max-height: none;
+    width: 248px;
+    margin: 0 auto;
+}
+
+/* Body */
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4efe6;
+    border-bottom: 1px solid #f4efe6;
+    border-top: 1px solid #f4efe6;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #fffdf8;
+    border-color: #e7e0d3;
+    border-radius: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-top: 4px solid #f5a623;
+    box-shadow:
+        0 6px 20px -6px rgba(80, 60, 20, 0.14),
+        0 2px 6px -2px rgba(80, 60, 20, 0.08);
+    margin: 0 auto;
+    padding: 0;
+    width: 570px;
+}
+
+.inner-body a {
+    color: #b57e12;
+    word-break: break-all;
+}
+
+/* Subcopy */
+
+.subcopy {
+    border-top: 1px solid #ece5d8;
+    margin-top: 25px;
+    padding-top: 25px;
+}
+
+.subcopy p {
+    font-size: 14px;
+    color: #78716a;
+}
+
+/* Footer */
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 570px;
+}
+
+.footer p {
+    color: #a59d8d;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer a {
+    color: #a59d8d;
+    text-decoration: underline;
+}
+
+/* Tables */
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #ece5d8;
+    color: #26231e;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #57534c;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 36px;
+}
+
+/* Buttons */
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    float: unset;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 10px;
+    color: #26231e;
+    display: inline-block;
+    font-weight: 600;
+    overflow: hidden;
+    text-decoration: none;
+    -webkit-text-size-adjust: none;
+}
+
+.button-blue,
+.button-primary {
+    background-color: #f5a623;
+    border-bottom: 10px solid #f5a623;
+    border-left: 20px solid #f5a623;
+    border-right: 20px solid #f5a623;
+    border-top: 10px solid #f5a623;
+    color: #2b2419;
+}
+
+.button-green,
+.button-success {
+    background-color: #1f7a44;
+    border-bottom: 10px solid #1f7a44;
+    border-left: 20px solid #1f7a44;
+    border-right: 20px solid #1f7a44;
+    border-top: 10px solid #1f7a44;
+    color: #ffffff;
+}
+
+.button-red,
+.button-error {
+    background-color: #b4322a;
+    border-bottom: 10px solid #b4322a;
+    border-left: 20px solid #b4322a;
+    border-right: 20px solid #b4322a;
+    border-top: 10px solid #b4322a;
+    color: #ffffff;
+}
+
+/* Button text colour — scoped to out-specify `.inner-body a` (the gold link
+   colour), so the CTA never renders gold-on-gold. */
+.inner-body a.button-blue,
+.inner-body a.button-primary {
+    color: #2b2419;
+}
+
+.inner-body a.button-green,
+.inner-body a.button-success,
+.inner-body a.button-red,
+.inner-body a.button-error {
+    color: #ffffff;
+}
+
+/* Panels */
+
+.panel {
+    border-left: #f5a623 solid 4px;
+    margin: 21px 0;
+    border-radius: 0 8px 8px 0;
+    overflow: hidden;
+}
+
+.panel-content {
+    background-color: #faf5ea;
+    color: #57534c;
+    padding: 16px;
+}
+
+.panel-content p {
+    color: #57534c;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Utilities */
+
+.break-all {
+    word-break: break-all;
+}

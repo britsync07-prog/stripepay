@@ -1,0 +1,99 @@
+import { Form, Head, usePage } from '@inertiajs/react';
+import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import InputError from '@/components/input-error';
+import { Panel } from '@/components/panel';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { edit } from '@/routes/profile';
+import type { Auth } from '@/types';
+
+type PageProps = {
+    auth: Auth;
+};
+
+export default function Profile() {
+    const { auth } = usePage<PageProps>().props;
+
+    return (
+        <>
+            <Head title="Profile settings" />
+
+            <h1 className="sr-only">Profile settings</h1>
+
+            <Panel
+                eyebrow="Account"
+                title="Profile"
+                description="Update your name and review your account email."
+            >
+                <Form
+                    {...ProfileController.update.form()}
+                    options={{
+                        preserveScroll: true,
+                    }}
+                    className="space-y-6"
+                >
+                    {({ processing, errors }) => (
+                        <>
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Name</Label>
+
+                                <Input
+                                    id="name"
+                                    className="mt-1 block w-full"
+                                    defaultValue={auth.user.name}
+                                    name="name"
+                                    required
+                                    autoComplete="name"
+                                    placeholder="Full name"
+                                />
+
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.name}
+                                />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email address</Label>
+
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    className="mt-1 block w-full cursor-not-allowed opacity-70"
+                                    value={auth.user.email}
+                                    readOnly
+                                    aria-readonly
+                                    autoComplete="username"
+                                />
+
+                                <p className="text-xs text-muted-foreground">
+                                    Your email address can't be changed. Contact
+                                    support if you need to update it.
+                                </p>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <Button
+                                    disabled={processing}
+                                    data-test="update-profile-button"
+                                >
+                                    Save
+                                </Button>
+                            </div>
+                        </>
+                    )}
+                </Form>
+            </Panel>
+        </>
+    );
+}
+
+Profile.layout = {
+    breadcrumbs: [
+        {
+            title: 'Profile settings',
+            href: edit(),
+        },
+    ],
+};

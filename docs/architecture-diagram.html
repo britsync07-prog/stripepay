@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BlackDesck — Architecture & Payments Map</title>
+<!--
+  First-pass HTML transcription of the hand-drawn architecture sketch
+  (WhatsApp 2026-07-06). Self-contained, no external dependencies — open in any
+  browser. Structured as editable layers so we can iterate on changes + the
+  Zoho/Salesforce CRM integration. The PAYMENTS layer is highlighted (in focus).
+
+  Edit tips:
+   - Each layer is a <section class="layer">. Each box is a <div class="node">.
+   - Tones: .acq .platform .data .crm .pay .admin  (see :root colours).
+   - "?" chips = open questions to resolve.
+-->
+<style>
+  :root {
+    --ink: #1f2430; --muted: #6b7280; --line: #cbd5e1; --bg: #f4f5f7;
+    --card: #ffffff; --gold: #a8791f;
+    --acq: #2563eb; --platform: #7c3aed; --data: #0891b2;
+    --crm: #d97706; --pay: #16a34a; --admin: #475569;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { padding: 28px 32px 8px; }
+  header h1 { margin: 0; font-size: 22px; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  .wrap { padding: 12px 32px 48px; max-width: 1180px; margin: 0 auto; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px 0 6px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; }
+
+  .layer { background: var(--card); border: 1px solid #e5e7eb; border-radius: 14px;
+    padding: 16px 18px; margin: 0 0 6px; box-shadow: 0 1px 2px rgba(16,24,40,.05); }
+  .layer > .lhead { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
+  .lhead .tag { font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 700; color: #fff; padding: 3px 9px; border-radius: 999px; }
+  .lhead .sub { color: var(--muted); font-size: 12px; }
+
+  .row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .col { flex: 1 1 220px; min-width: 200px; }
+  .node { border: 1px solid #e5e7eb; border-left: 4px solid var(--line);
+    border-radius: 10px; padding: 10px 12px; background: #fff; margin-bottom: 10px; }
+  .node h4 { margin: 0 0 3px; font-size: 13.5px; }
+  .node ul { margin: 4px 0 0; padding-left: 16px; color: var(--muted); font-size: 12.5px; }
+  .node ul li { margin: 1px 0; }
+  .node .k { color: var(--ink); font-weight: 600; }
+
+  .flow { text-align: center; color: var(--muted); font-size: 22px; line-height: 1; margin: 2px 0; }
+  .chip { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+    background: #eef2ff; color: #4338ca; margin-left: 6px; vertical-align: middle; }
+  .chip.q { background: #fef3c7; color: #92400e; }
+  .chip.now { background: #dcfce7; color: #166534; }
+  .chip.next { background: #e0e7ff; color: #3730a3; }
+
+  /* tones */
+  .acq .tag { background: var(--acq); }       .acq .node { border-left-color: var(--acq); }
+  .platform .tag { background: var(--platform);} .platform .node { border-left-color: var(--platform); }
+  .data .tag { background: var(--data); }      .data .node { border-left-color: var(--data); }
+  .crm .tag { background: var(--crm); }        .crm .node { border-left-color: var(--crm); }
+  .admin .tag { background: var(--admin); }    .admin .node { border-left-color: var(--admin); }
+
+  .pay { border-color: var(--pay); box-shadow: 0 0 0 2px rgba(22,163,74,.12), 0 1px 2px rgba(16,24,40,.05); }
+  .pay .tag { background: var(--pay); }        .pay .node { border-left-color: var(--pay); }
+  .pay .focus { font-size: 11px; color: var(--pay); font-weight: 700; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 760px){ .grid2 { grid-template-columns: 1fr; } }
+  .rail { border:1px dashed var(--pay); border-radius:10px; padding:10px 12px; background:#f0fdf4; }
+  .rail h4 { margin:0 0 4px; font-size:13px; }
+  .pill { display:inline-block; border:1px solid #bbf7d0; background:#fff; color:#166534;
+    border-radius:999px; padding:2px 10px; margin:3px 4px 0 0; font-size:12px; font-weight:600; }
+  .pill.off { color:#9ca3af; border-color:#e5e7eb; }
+  footer { color: var(--muted); font-size: 12px; padding: 4px 32px 40px; max-width:1180px; margin:0 auto; }
+  .foot-note { border-top:1px solid #e5e7eb; padding-top:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BlackDesck — Architecture &amp; Payments Map</h1>
+  <p>First-pass transcription of the hand-drawn sketch · flows top → bottom · <b>payments in focus</b> ·
+     legend below. Chips: <span class="chip now">now</span> built ·
+     <span class="chip next">next</span> planned · <span class="chip q">?</span> to decide.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--acq)"></i>Acquisition &amp; marketing</span>
+    <span><i class="swatch" style="background:var(--platform)"></i>Platform (core)</span>
+    <span><i class="swatch" style="background:var(--data)"></i>Data &amp; prospects</span>
+    <span><i class="swatch" style="background:var(--crm)"></i>CRM / external systems</span>
+    <span><i class="swatch" style="background:var(--pay)"></i>Payments &amp; billing</span>
+    <span><i class="swatch" style="background:var(--admin)"></i>Admin / security</span>
+  </div>
+
+  <!-- 1. ACQUISITION -->
+  <section class="layer acq">
+    <div class="lhead"><span class="tag">1 · Acquisition</span>
+      <span class="sub">Site vitrine · contact channels · marketing → leads</span></div>
+    <div class="row">
+      <div class="col">
+        <div class="node"><h4>Website / Vitrine <span class="chip now">now</span></h4>
+          <ul><li>Showroom + active plans</li><li>Contact form → request</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Contact channels</h4>
+          <ul><li>Email</li><li>Chat / concierge (AI)</li><li class="k">WhatsApp <span class="chip next">next</span></li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Marketing</h4>
+          <ul><li>Ads / sitemaps (إعلانات)</li><li>SEO</li><li>Social media</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Lead generation</h4>
+          <ul><li>Inbound custom-plan requests</li><li>Manual prospects</li><li>Imported contacts</li></ul></div>
+      </div>
+    </div>
+  </section>
+  <div class="flow">▼</div>
+
+  <!-- 2. PLATFORM -->
+  <section class="layer platform">
+    <div class="lhead"><span class="tag">2 · Platform (core)</span>
+      <span class="sub">the intermediary — owns the relationship, money &amp; comms</span></div>
+    <div class="row">
+      <div class="col">
+        <div class="node"><h4>Company ↔ Experts / Consulting <span class="chip q">?</span></h4>
+          <ul><li>Managed expert network (no expert login)</li><li>Assign expert → project</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Marketing &amp; Sales</h4>
+          <ul><li>Verified vs non-verified sales <span class="chip q">?</span></li><li>Pipeline: New→Contacted→Quoted→Won</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Users &amp; auth</h4>
+          <ul><li>Clients (login on payment)</li><li>Passwords / magic-login / 2FA / passkeys</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Plans · Projects · Quotes</h4>
+          <ul><li>Plans (self-serve) + custom offers</li><li>Project per paid consultation</li><li class="k">Quotes / offer doc <span class="chip next">next</span></li></ul></div>
+      </div>
+    </div>
+  </section>
+  <div class="flow">▼ ▲</div>
+
+  <!-- 3. DATA -->
+  <section class="layer data">
+    <div class="lhead"><span class="tag">3 · Data &amp; prospects</span>
+      <span class="sub">database · prospects list · import/export · sales portfolio</span></div>
+    <div class="row">
+      <div class="col">
+        <div class="node"><h4>Contacts DB <span class="chip now">now</span></h4>
+          <ul><li>Reusable person behind leads/clients</li><li>Search / reuse / dedupe by email</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Prospects list</h4>
+          <ul><li>Import (CSV/XLSX) <span class="chip now">now</span></li><li>Export (XLSX) <span class="chip now">now</span></li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Sales portfolio</h4>
+          <ul><li>Consultations · payments · invoices</li><li>Lead scoring (AI)</li></ul></div>
+      </div>
+      <div class="col">
+        <div class="node"><h4>Data archives / partners <span class="chip q">?</span></h4>
+          <ul><li>Retention &amp; backups</li><li>Data security / GDPR</li></ul></div>
+      </div>
+    </div>
+  </section>
+  <div class="flow">▼</div>
+
+  <!-- 4. CRM INTEGRATION -->
+  <section class="layer crm">
+    <div class="lhead"><span class="tag">4 · CRM / external systems</span>
+      <span class="sub">IT system CRM — sync the platform with an external CRM</span></div>
+    <div class="grid2">
+      <div class="node"><h4>Zoho <span class="chip q">? integrate</span></h4>
+        <ul><li>Sync contacts, leads, deals/stages</li><li>Quotes/estimates + templates (like our offer)</li><li>Two-way? webhook + API</li></ul></div>
+      <div class="node"><h4>Salesforce <span class="chip q">? alternative</span></h4>
+        <ul><li>Same sync surface (contacts/leads/opps)</li><li>Pick one CRM to standardise on</li></ul></div>
+    </div>
+  </section>
+  <div class="flow">▼</div>
+
+  <!-- 5. PAYMENTS (IN FOCUS) -->
+  <section class="layer pay">
+    <div class="lhead"><span class="tag">5 · Payments &amp; billing</span>
+      <span class="sub focus">◀ START HERE — verify the money flow first</span></div>
+
+    <div class="grid2">
+      <div class="node"><h4>Money-in (checkout) <span class="chip now">now</span></h4>
+        <ul>
+          <li>Gateway-agnostic checkout (pick a rail)</li>
+          <li class="k">Record once, idempotent → Payment</li>
+          <li>Fee/net captured · invoice auto-issued</li>
+          <li>Provision client + verify email on payment</li>
+        </ul></div>
+      <div class="node"><h4>Money-out (payouts) <span class="chip now">now</span></h4>
+        <ul>
+          <li>Experts paid by admins (no expert login)</li>
+          <li class="k">Stripe Connect (Express)</li>
+          <li>Idempotent transfer + proof</li>
+        </ul></div>
+    </div>
+
+    <div class="flow" style="font-size:16px">▼ &nbsp; PSP layer &nbsp; ▼</div>
+
+    <div class="rail">
+      <h4>Payment Service Providers (rails)</h4>
+      <span class="pill">Stripe — cards (embedded) · now</span>
+      <span class="pill">PayPal — buttons · now</span>
+      <span class="pill off">Wise — payouts/FX? · to check</span>
+      <span class="pill off">PMP / other · ?</span>
+      <div style="margin-top:8px; color:var(--muted); font-size:12px">
+        Each rail = one adapter (money-in <span class="k">PaymentGateway</span>, money-out <span class="k">PayoutRail</span>).
+        Webhooks: Stripe <code>checkout.session.completed</code>, PayPal capture/refund/dispute.
+        <b>Open items to verify:</b> live-mode activation · fee/net backfill (queue) · refunds/disputes · Wise scope.
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ADMIN / SECURITY (cross-cutting) -->
+  <div class="flow">▲ governs all</div>
+  <section class="layer admin">
+    <div class="lhead"><span class="tag">6 · Admin / security</span>
+      <span class="sub">analyse · manage/work · access &amp; security (cross-cutting)</span></div>
+    <div class="row">
+      <div class="col"><div class="node"><h4>Analyse data</h4>
+        <ul><li>Dashboards · KPIs · revenue/margin</li></ul></div></div>
+      <div class="col"><div class="node"><h4>Management / work</h4>
+        <ul><li>Consultations · leads · projects · payouts</li></ul></div></div>
+      <div class="col"><div class="node"><h4>Access &amp; security</h4>
+        <ul><li>Roles/permissions · audit log · 2FA</li></ul></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="foot-note">
+    <b>How to read:</b> layers flow acquisition → platform → data → CRM → payments; admin/security governs all.
+    This is a transcription for discussion — some sketch labels were ambiguous and are marked
+    <span class="chip q">?</span>. Next we drill into layer&nbsp;5 (payments) and decide the Zoho/Salesforce
+    integration surface in layer&nbsp;4. &nbsp;<i>Source: hand-drawn sketch, 2026-07-06.</i>
+  </div>
+</footer>
+</body>
+</html>
