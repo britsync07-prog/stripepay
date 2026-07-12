@@ -141,7 +141,7 @@ Route::get('/quote/{consultationRequest}/pdf', DownloadQuotationPdf::class)->nam
 // Gateway-agnostic checkout. Embedded rails (Stripe) redirect here on success;
 // "buttons" rails (PayPal SDK) call order/capture from the on-page buttons.
 Route::get('/consultation/{consultationRequest}/pay/{gateway}/return', ReturnFromGateway::class)->name('consultation.pay.return');
-Route::post('/consultation/{consultationRequest}/pay/{gateway}/session', CreateGatewaySession::class)->middleware('throttle:30,1')->name('consultation.pay.session');
+Route::post('/consultation/{consultationRequest}/pay/{gateway}/session', CreateGatewaySession::class)->middleware('throttle:payment-session')->name('consultation.pay.session');
 Route::post('/consultation/{consultationRequest}/pay/{gateway}/capture', CaptureGatewayOrder::class)->middleware('throttle:30,1')->name('consultation.pay.capture');
 
 Route::post('/paypal/webhook', PaypalWebhook::class)->name('paypal.webhook');

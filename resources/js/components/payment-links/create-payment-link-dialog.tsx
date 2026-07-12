@@ -44,7 +44,7 @@ export function CreatePaymentLinkDialog({
         formState: { errors, isSubmitting },
     } = useForm<FormValues>({
         resolver: zodResolver(schema),
-        defaultValues: { amount: '', title: '', expires_in_days: '' },
+        defaultValues: { amount: '', title: '', expires_in_days: '3' },
     });
 
     const submit = (values: FormValues) => {
@@ -121,15 +121,13 @@ export function CreatePaymentLinkDialog({
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="pl-expiry">
-                            Expires in (days, optional)
-                        </Label>
+                        <Label htmlFor="pl-expiry">Expires in (days)</Label>
                         <Input
                             id="pl-expiry"
                             type="number"
                             min="1"
                             max="365"
-                            placeholder="Never"
+                            placeholder="3"
                             {...register('expires_in_days')}
                         />
                     </div>

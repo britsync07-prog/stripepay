@@ -43,6 +43,8 @@ class PaymentLinksTest extends TestCase
         $this->assertNull($link->email);
         $this->assertSame(10000, (int) $link->amount);
         $this->assertSame(ConsultationStatus::Pending, $link->status);
+        $this->assertNotNull($link->expires_at);
+        $this->assertTrue($link->expires_at->between(now()->addDays(2), now()->addDays(4)));
         $this->assertTrue($link->isPaymentLink());
         $this->assertFalse($link->isLead());
     }

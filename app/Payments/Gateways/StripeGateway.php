@@ -168,6 +168,24 @@ class StripeGateway implements PaymentGateway
             return null;
         }
 
-        return $session->status === 'open' ? $session : null;
+        if ($session->status !== 'open') {
+            return null;
+        }
+
+        return $this->hasCurrentRiskControls($session, $request) ? $session : null;
+    }
+
+    private function hasCurrentRiskControls(Session $session, ConsultationRequest $request): bool
+    {
+        $requestThreeDSecure = $request->isPaymentLink() || (int) $request->amount > 5000;
+        $expectedRelationship = $request->isPaymentLink() ? 'known_by_admin' : 'standard';
+        $expectedAuthentication = $requestThreeDSecure ? 'requested' : 'automatic';
+        $expectedThreeDSecure = $requestThreeDSecure ? 'any' : 'automatic';
+
+        return (string) ($session->metadata['consultation_request_uuid'] ?? '') === $request->uuid
+            && (string) ($session->metadata['client_relationship'] ?? '') === $expectedRelationship
+            && (string) ($session->metadata['strong_customer_authentication'] ?? '') === $expectedAuthentication
+            && (string) ($session->payment_method_options->card->request_three_d_secure ?? '') === $expectedThreeDSecure
+            && (string) ($session->customer_creation ?? '') === 'always';
     }
 }

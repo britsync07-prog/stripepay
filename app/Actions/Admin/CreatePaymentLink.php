@@ -21,6 +21,8 @@ class CreatePaymentLink
 {
     use AsAction;
 
+    private const DEFAULT_EXPIRY_DAYS = 3;
+
     public function asController(Request $request)
     {
         $data = $request->validate([
@@ -41,9 +43,7 @@ class CreatePaymentLink
             'amount' => $minor,
             'currency' => $currency,
             'status' => ConsultationStatus::Pending,
-            'expires_at' => isset($data['expires_in_days'])
-                ? now()->addDays((int) $data['expires_in_days'])
-                : null,
+            'expires_at' => now()->addDays((int) ($data['expires_in_days'] ?? self::DEFAULT_EXPIRY_DAYS)),
         ]);
 
         activity('payment')

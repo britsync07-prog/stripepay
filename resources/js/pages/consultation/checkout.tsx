@@ -9,6 +9,7 @@ import { CropMarks } from '@/components/guest/crop-marks';
 import { GuestTopbar } from '@/components/guest/guest-topbar';
 import { CardBrands, PaypalMark } from '@/components/payment-brands';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { TRUST } from '@/constants/checkout';
@@ -48,11 +49,8 @@ export default function Checkout({ gateways, plan, quotation, offer }: Props) {
     // the request amount.
     const priceLabel = plan ? plan.formatted_price : offer.amount;
 
-    // Nothing is loaded until the buyer chooses — auto-select only when there's
-    // a single option (no real choice to make).
-    const [activeKey, setActiveKey] = useState<string>(
-        gateways.length === 1 ? gateways[0].key : '',
-    );
+    // Nothing is loaded until the buyer explicitly starts a payment method.
+    const [activeKey, setActiveKey] = useState<string>('');
     const active = gateways.find((g) => g.key === activeKey) ?? null;
 
     const fade = (delay = 0) => ({
@@ -174,8 +172,22 @@ export default function Checkout({ gateways, plan, quotation, offer }: Props) {
                                 ) : !active ? (
                                     <div className="flex flex-col items-center gap-2 py-12 text-center text-sm text-muted-foreground">
                                         <CreditCard className="size-6 opacity-60" />
-                                        Choose a payment method above to
-                                        continue.
+                                        {gateways.length === 1 ? (
+                                            <Button
+                                                type="button"
+                                                className="mt-2 gap-2"
+                                                onClick={() =>
+                                                    setActiveKey(
+                                                        gateways[0].key,
+                                                    )
+                                                }
+                                            >
+                                                <CreditCard className="size-4" />
+                                                {gateways[0].title}
+                                            </Button>
+                                        ) : (
+                                            'Choose a payment method above to continue.'
+                                        )}
                                     </div>
                                 ) : active.mode === modes.embedded ? (
                                     <StripeEmbeddedCheckout gateway={active} />
