@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class StripeCheckoutSessionPayloadTest extends TestCase
 {
-    public function test_standalone_payment_links_request_3ds_and_known_client_metadata(): void
+    public function test_standalone_payment_links_keep_risk_based_3ds_and_known_client_metadata(): void
     {
         $payload = $this->payloadFor(new ConsultationRequest([
             'uuid' => 'link-uuid',
@@ -21,7 +21,7 @@ class StripeCheckoutSessionPayloadTest extends TestCase
         ]));
 
         $this->assertSame('always', $payload['customer_creation']);
-        $this->assertSame('any', $payload['payment_method_options']['card']['request_three_d_secure']);
+        $this->assertSame('automatic', $payload['payment_method_options']['card']['request_three_d_secure']);
         $this->assertSame('standalone', $payload['metadata']['payment_link_type']);
         $this->assertSame('admin_payment_link', $payload['metadata']['checkout_source']);
         $this->assertSame('known_by_admin', $payload['metadata']['client_relationship']);
@@ -30,7 +30,7 @@ class StripeCheckoutSessionPayloadTest extends TestCase
         $this->assertSame('Strategy call', $payload['line_items'][0]['price_data']['product_data']['name']);
     }
 
-    public function test_high_value_consultation_checkouts_request_3ds(): void
+    public function test_high_value_consultation_checkouts_keep_stripe_automatic_3ds(): void
     {
         $payload = $this->payloadFor(new ConsultationRequest([
             'uuid' => 'consultation-uuid',
@@ -41,7 +41,7 @@ class StripeCheckoutSessionPayloadTest extends TestCase
             'currency' => 'USD',
         ]));
 
-        $this->assertSame('any', $payload['payment_method_options']['card']['request_three_d_secure']);
+        $this->assertSame('automatic', $payload['payment_method_options']['card']['request_three_d_secure']);
         $this->assertSame('consultation', $payload['metadata']['payment_link_type']);
         $this->assertSame('standard', $payload['metadata']['client_relationship']);
     }

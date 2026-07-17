@@ -177,10 +177,9 @@ class StripeGateway implements PaymentGateway
 
     private function hasCurrentRiskControls(Session $session, ConsultationRequest $request): bool
     {
-        $requestThreeDSecure = $request->isPaymentLink() || (int) $request->amount > 5000;
         $expectedRelationship = $request->isPaymentLink() ? 'known_by_admin' : 'standard';
-        $expectedAuthentication = $requestThreeDSecure ? 'requested' : 'automatic';
-        $expectedThreeDSecure = $requestThreeDSecure ? 'any' : 'automatic';
+        $expectedAuthentication = 'automatic';
+        $expectedThreeDSecure = 'automatic';
 
         return (string) ($session->metadata['consultation_request_uuid'] ?? '') === $request->uuid
             && (string) ($session->metadata['client_relationship'] ?? '') === $expectedRelationship

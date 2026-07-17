@@ -27,14 +27,13 @@ class StripeCheckout
 
     private function sessionPayload(ConsultationRequest $request, string $returnUrl): array
     {
-        $requestThreeDSecure = $this->shouldRequestThreeDSecure($request);
         $metadata = [
             'consultation_request_uuid' => $request->uuid,
             'consultation_reference' => (string) $request->reference,
             'payment_link_type' => $request->isPaymentLink() ? 'standalone' : 'consultation',
             'checkout_source' => $request->isPaymentLink() ? 'admin_payment_link' : 'consultation_checkout',
             'client_relationship' => $request->isPaymentLink() ? 'known_by_admin' : 'standard',
-            'strong_customer_authentication' => $requestThreeDSecure ? 'requested' : 'automatic',
+            'strong_customer_authentication' => 'automatic',
         ];
 
         return [
@@ -53,7 +52,7 @@ class StripeCheckout
             ...($request->email ? ['customer_email' => $request->email] : []),
             'payment_method_options' => [
                 'card' => [
-                    'request_three_d_secure' => $requestThreeDSecure ? 'any' : 'automatic',
+                    'request_three_d_secure' => 'automatic',
                 ],
             ],
             'payment_intent_data' => [
@@ -74,11 +73,6 @@ class StripeCheckout
             ]],
             'metadata' => $metadata,
         ];
-    }
-
-    private function shouldRequestThreeDSecure(ConsultationRequest $request): bool
-    {
-        return $request->isPaymentLink() || (int) $request->amount > 5000;
     }
 
     /**
