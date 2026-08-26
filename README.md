@@ -1,4 +1,10 @@
 # BlackDesck (stripepay)
+<div align="center">
+
+![License](https://img.shields.io/github/license/britsync07-prog/stripepay?style=flat-square&label=license&color=06b6d4) ![Language](https://img.shields.io/github/languages/top/britsync07-prog/stripepay?style=flat-square&color=0ea5e9) ![Stars](https://img.shields.io/github/stars/britsync07-prog/stripepay?style=flat-square&color=f59e0b) ![Last commit](https://img.shields.io/github/last-commit/britsync07-prog/stripepay?style=flat-square&color=22c55e) ![Repo size](https://img.shields.io/github/repo-size/britsync07-prog/stripepay?style=flat-square&color=94a3b8)
+
+</div>
+
 > A consultation-commerce platform with gateway-agnostic Stripe and PayPal checkout, risk-based 3DS, and managed expert payouts.
 
 BlackDesck (repository name `stripepay`) is a Laravel + React platform that sells expert consultations end to end: guests buy fixed plans or request custom ones, admins price and work each engagement through a built-in CRM pipeline, clients get a magic-login portal, and experts are paid out over Stripe Connect - all without ever exposing floats, auto-increment IDs, or unverified identities.
@@ -57,20 +63,20 @@ Status: production-oriented and actively developed. The repo ships a DigitalOcea
 ```text
 stripepay/
 +-- app/
-¦   +-- Actions/          # Business logic as single actions (Admin/, Clients/,
-¦   ¦                     #   Consultations/, Payments/, Paypal/, Plans/, Stripe/, ...)
-¦   +-- Payments/         # Contracts/, Gateways/ (money-in drivers), Rails/ (payouts)
-¦   +-- Services/         # StripeCheckout, PayPalCheckout, StripeConnect,
-¦   ¦                     #   AI provider drivers, Media uploader
-¦   +-- Data/             # spatie DTOs (Lead, Payment, Payout, Invoice, ...)
-¦   +-- Enums/            # Backed status enums with transition guards
-¦   +-- Events/ Listeners/# Domain events -> admin notifications
-¦   +-- Models/ Concerns/ # Eloquent models, HasUuidKey / FormatsMoney traits
-¦   +-- Settings/ Exports/# Platform settings, spreadsheet exporters
-¦   +-- Support/          # Upload validation profiles, dashboard metrics
+ï¿½   +-- Actions/          # Business logic as single actions (Admin/, Clients/,
+ï¿½   ï¿½                     #   Consultations/, Payments/, Paypal/, Plans/, Stripe/, ...)
+ï¿½   +-- Payments/         # Contracts/, Gateways/ (money-in drivers), Rails/ (payouts)
+ï¿½   +-- Services/         # StripeCheckout, PayPalCheckout, StripeConnect,
+ï¿½   ï¿½                     #   AI provider drivers, Media uploader
+ï¿½   +-- Data/             # spatie DTOs (Lead, Payment, Payout, Invoice, ...)
+ï¿½   +-- Enums/            # Backed status enums with transition guards
+ï¿½   +-- Events/ Listeners/# Domain events -> admin notifications
+ï¿½   +-- Models/ Concerns/ # Eloquent models, HasUuidKey / FormatsMoney traits
+ï¿½   +-- Settings/ Exports/# Platform settings, spreadsheet exporters
+ï¿½   +-- Support/          # Upload validation profiles, dashboard metrics
 +-- resources/js/
-¦   +-- pages/            # admin/, portal/, consultation/, auth/, settings/
-¦   +-- components/       # shadcn primitives + composed feature components
+ï¿½   +-- pages/            # admin/, portal/, consultation/, auth/, settings/
+ï¿½   +-- components/       # shadcn primitives + composed feature components
 +-- routes/web.php        # Actions wired directly as endpoints
 +-- tests/                # Feature + Unit suites (in-memory SQLite)
 +-- docs/                 # AI_FEATURES.md, DIGITALOCEAN_DEPLOY.md
@@ -169,4 +175,4 @@ Hygiene: clean. No `.env`, SQLite dumps, key files, or credential-bearing artifa
 
 ## License
 
-MIT License — Copyright (c) 2026 Musfiqur Rahman Saimon. See [LICENSE](./LICENSE).
+MIT License ï¿½ Copyright (c) 2026 Musfiqur Rahman Saimon. See [LICENSE](./LICENSE).
