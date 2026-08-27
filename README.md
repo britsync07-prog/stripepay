@@ -176,3 +176,8 @@ Hygiene: clean. No `.env`, SQLite dumps, key files, or credential-bearing artifa
 ## License
 
 MIT License � Copyright (c) 2026 Musfiqur Rahman Saimon. See [LICENSE](./LICENSE).
+
+
+---
+Keywords: stripe connect, payments, laravel, saas, paypal, 3ds, consultation platform
+
