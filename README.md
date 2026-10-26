@@ -173,6 +173,13 @@ Observed practices: Fortify-backed registration, email verification, TOTP two-fa
 
 Hygiene: clean. No `.env`, SQLite dumps, key files, or credential-bearing artifacts are tracked in git; the secret scan found only placeholder `sk_test_x` values inside test configuration.
 
+## Contact
+
+- 📧 Email: [saimon@ascentraconsulting.co.uk](mailto:saimon@ascentraconsulting.co.uk)
+- 💼 LinkedIn: [Musfiqur Rahman Saimon](https://www.linkedin.com/in/musfiqur-rahman-saimon-a5994b3aa)
+- 🐙 GitHub: [@britsync07-prog](https://github.com/britsync07-prog)
+- 🌐 Portfolio: [brit-os.pages.dev](https://brit-os.pages.dev/)
+
 ## License
 
 MIT License � Copyright (c) 2026 Musfiqur Rahman Saimon. See [LICENSE](./LICENSE).
